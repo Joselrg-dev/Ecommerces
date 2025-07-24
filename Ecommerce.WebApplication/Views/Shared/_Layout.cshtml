@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Variedades Jaho-Máltez</title>
+
+
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+</head>
+<body class="sb-nav-fixed">
+    <!-- Barra de navegación superior -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Marca de la aplicación -->
+        <a class="navbar-brand ps-3" href="index.html"><i class="fas fa-store-alt me-3"></i>InvenSync App</a>
+        <!-- Botón de alternancia para la barra lateral -->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+
+        <!-- Menú de usuario -->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#!">Registro de actividad</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item text-danger" href="#!">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <div id="layoutSidenav">
+        <!-- Barra lateral -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Resumen</div>
+                        <a class="nav-link" href="@Url.Action("Index", "Dashboards")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Tablero
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Gestión Principal</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBodega" aria-expanded="false">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                            Inventario
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseBodega" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="@Url.Action("Index", "Categoria")"><i class="fas fa-tags me-2"></i>Categorías</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Inventario")"><i class="fas fa-warehouse me-2"></i>Inventario</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Platillo")"><i class="fas fa-utensils me-2"></i>Platillos</a>
+                            </nav>
+                        </div>
+
+                        <!-- Sección adicional -->
+                        <div class="sb-sidenav-menu-heading">Operaciones</div>
+                        <a class="nav-link" href="@Url.Action("Index", "Factura")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-dollar-sign"></i></div>
+                            Ventas
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Index", "Pedido")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
+                            Pedidos
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Administración</div>
+                        <a class="nav-link" href="@Url.Action("Index", "Empleado")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>
+                            Usuarios
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Index", "Cliente")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-friends"></i></div>
+                            Clientes
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Reportes</div>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+                            Gráficos
+                        </a>
+                        <a class="nav-link" href="tables.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Tablas
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Conectado como:</div>
+                    Usuario Administrador
+                </div>
+            </nav>
+        </div>
+
+        <!-- Contenido principal -->
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    @RenderBody()
+                </div>
+            </main>
+            <!-- Pie de página -->
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted"><strong>Copyright &copy; PerlSoft 2025</strong></div>
+                        <div>
+                            <a href="#!">Política de privacidad</a>
+                            &middot;
+                            <a href="#!">Términos & Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/complementos")
+    @Scripts.Render("~/bundles/otros")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

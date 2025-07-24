@@ -1,0 +1,247 @@
+﻿@model List<Ecommerce.CpEntities.Models.Categorias>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string descripcion = "Lista de categorias";
+}
+
+<ol class="breadcrumb mt-3 mb-2">
+    <li class="breadcrumb-item">Gestión de inventario</li>
+    <li class="breadcrumb-item active">Categorias</li>
+</ol>
+<hr />
+
+<div class="card shadow mb-3">
+    <div class="card-header fw-bold bg-body-secondary text-dark">
+        <h5 class="m-0 fw-bold text-black"><i class="fas fa-tags me-2"></i><strong>@descripcion</strong></h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Botón para abrir el modal de agregar categorias -->
+                <button type="button" id="btnCategoriaAdd" class="btn btn-sm btn-success fw-bold" data-bs-toggle="modal" onclick="AbrirModal(null)"><i class="fas fa-plus-circle me-2"></i>Nueva Categoria</button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover display cell-border" id="tbDataCategoria" cellspacing="1" style="width:100%">
+                    <thead class="bg-body-secondary">
+                        <tr class="text-success-emphasis">
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Descripción</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCategoriaAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="categoriaModalLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centere" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark fw-bold text-white">
+                <h1 class="modal-title fs-5" id="categoriaModalLabel">Nueva Categoria</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="categoriaForm">
+                    <div class="row g-1">
+                        <input id="idCategoria" type="hidden" value="0" />
+                        <div class="form-group col-sm-12">
+                            <label for="nombre" class="form-label fw-bold">Nombre</label>
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                            <textarea type="text" class="form-control form-control-sm input-validar" id="descripcion" style="height:50px; resize:none" name="descripcion"></textarea>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="cboEstado" class="form-label fw-bold">Estado</label>
+                            <select id="cboEstado" class="form-select">
+                                <option value="1">Activo</option>
+                                <option value="0">No Activo</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!--Mensaje de alerta-->
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarCategoria" class="btn btn-primary" onclick=" GuardarCategoria()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        var dataTable;
+        var selectRow;
+
+        dataTable = $("#tbDataCategoria").DataTable({
+            responsive: true,
+            ordering: false,
+            ajax: {
+                url: '@Url.Action("ListarCategoria", "Categoria")',
+                type: "GET",
+                dataType: "json"
+            },
+            columns: [
+                { data: "IdCategoria" },
+                { data: "NombreCategoria" },
+                { data: "DescripcionCategoria" },
+                {
+                    data: "Estado",
+                    className: "text-center",
+                    render: function (data) {
+                        return data ? '<span class="badge bg-info">Activo</span>' : '<span class="badge bg-warning">Inactivo</span>';
+                    }
+                },
+                {
+                    data: null,
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false,
+                    defaultContent: `
+                        <button class="btn btn-sm btn-primary edit-btn"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>`
+                }
+            ],
+            order: [[2, 'desc']],
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            }
+        });
+
+
+        function AbrirModal(data) {
+            LimpiarCampos();
+
+            if (data != null) {
+                $("#idCategoria").val(data.IdCategoria);
+                $("#nombre").val(data.NombreCategoria);
+                $("#descripcion").val(data.DescripcionCategoria);
+                $("#cboEstado").val(data.Estado == true ? 1 : 0);
+            }
+
+            $("#mensajeError").hide().text("");
+            $("#modalCategoriaAdd").modal("show");
+        }
+
+        function LimpiarCampos() {
+            $("#idCategoria").val(0);
+            $("#nombre").val("");
+            $("#descripcion").val("");
+            $("#cboEstado").val("1");
+            $("#mensajeError").hide().text("");
+        }
+
+        $('#tbDataCategoria tbody').on('click', '.edit-btn', function () {
+            selectRow = $(this).closest('tr');
+            var data = dataTable.row(selectRow).data();
+            AbrirModal(data);
+        });
+
+        function GuardarCategoria() {
+            var objCategoria = {
+                IdCategoria: $("#idCategoria").val(),
+                NombreCategoria: $("#nombre").val(),
+                DescripcionCategoria: $("#descripcion").val(),
+                Estado: $("#cboEstado").val() == 1 ? true : false
+            };
+
+            $.ajax({
+                url: '@Url.Action("GuardarCategoria", "Categoria")',
+                type: "POST",
+                data: JSON.stringify(objCategoria),
+                contentType: "application/json; charset=utf-8",
+                beforeSend: () => {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size: 12
+                    });
+                },
+                success: function (data) {
+                    $(".modal-body").LoadingOverlay("hide");
+                    if (objCategoria.IdCategoria == 0) {
+                        if (data.respuesta != 0) {
+                            objCategoria.IdCategoria = data.respuesta;
+                            dataTable.row.add(objCategoria).draw(false);
+                            Swal.fire("Guardado", data.message, "success");
+                            $("#modalCategoriaAdd").modal("hide");
+                        } else {
+                            Swal.fire("Error", data.message, "error");
+                        }
+                    }
+                    else {
+                        if (data.respuesta) {
+                            dataTable.row(selectRow).data(objCategoria).draw(false);
+                            selectRow = null;
+                            Swal.fire("Guardado", data.message, "success");
+                            $("#modalCategoriaAdd").modal("hide");
+                        }
+                        else {
+                            Swal.fire("Error", data.message, "error");
+                        }
+                    }
+                },
+                error: function () {
+                    $(".modal-body").LoadingOverlay("hide");
+                    Swal.fire("Error", "Ocurrió un error inesperado al guardar la categoria")
+                }
+            });
+        }
+
+        $('#tbDataCategoria tbody').on('click', '.delete-btn', function () {
+            selectRow = $(this).closest('tr');
+            var data = dataTable.row(selectRow).data();
+
+            Swal.fire({
+                title: "¿Está seguro?",
+                text: `¿Desea eliminar la categoría ${data.IdCategoria} - ${data.NombreCategoria}?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sí, eliminar"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarCategoria", "Categoria")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.idCategoria }),
+                        contentType: "application/json; charset=utf-8",
+                        success: response => {
+                            if (response.success) {
+                                Swal.fire("Eliminado", response.message, ",success");
+                                dataTable.ajax.reload();
+                            } else {
+                                Swal.fire("Error", response.message, "error");
+                            }
+                        },
+                        error: () => Swal.fire("Error", "Ocurrió un error al eliminar la categoria", "error")
+                    });
+                }
+            });
+        });
+
+    </script>
+}

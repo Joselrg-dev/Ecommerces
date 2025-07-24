@@ -1,0 +1,250 @@
+﻿@model List<Ecommerce.CpEntities.Models.Roles>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string descripcion = "Lista de roles";
+}
+
+<ol class="breadcrumb mt-3 mb-2">
+    <li class="breadcrumb-item">Gestión de usuarios</li>
+    <li class="breadcrumb-item active">Roles</li>
+</ol>
+<hr />
+
+<div class="card shadow mb-3">
+    <div class="card-header fw-bold bg-body-secondary text-dark">
+        <h5 class="m-0 fw-bold text-black"><i class="fas fa-user-shield me-2"></i><strong>@descripcion</strong></h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Botón para abrir el modal de agregar categorias -->
+                <button type="button" id="btnRolAdd" class="btn btn-sm btn-success fw-bold" data-bs-toggle="modal" onclick="AbrirModal(null)"><i class="fas fa-plus-circle me-2"></i>Nuevo Rol</button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover display cell-border" id="tbDataRol" cellspacing="1" style="width:100%">
+                    <thead class="bg-body-secondary">
+                        <tr class="text-success-emphasis">
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Descripción</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRolAdd" tabindex="-1" aria-labelledby="rolModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centere" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark fw-bold text-white">
+                <h5 class="modal-title" id="rolModalLabel">Nuevo Rol</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="rolForm">
+                    <div class="row g-1">
+                        <input id="rolId" type="hidden" value="0" />
+                        <div class="form-group col-sm-12">
+                            <label for="nombre" class="form-label fw-bold">Nombre</label>
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                            <textarea type="text" class="form-control form-control-sm input-validar" id="descripcion" style="height:50px; resize:none" name="descripcion"></textarea>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="cboEstado" class="form-label fw-bold">Estado</label>
+                            <select id="cboEstado" class="form-select">
+                                <option value="1">Activo</option>
+                                <option value="0">No Activo</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!--Mensaje de alerta-->
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarRol" class="btn btn-primary" onclick=" GuardarRol()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        var dataTable;
+        var selectRow;
+
+        // Configuración de DataTable
+        dataTable = $("#tbDataRol").DataTable({
+            responsive: true,
+            ordering: false,
+            ajax: {
+                url: '@Url.Action("ListarRol", "Rol")',
+                type: "GET",
+                dataType: "json"
+            },
+            columns: [
+                { data: "IdRol", className: "text-center" },
+                { data: "NombreRol", className: "text-center"  },
+                { data: "DescripcionRol" },
+                {
+                    data: "Estado", className: "text-center",
+                    render: valor => valor
+                        ? '<span class="badge bg-info">Activo</span>'
+                        : '<span class="badge bg-warning">No Activo</span>'
+
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `<button type="button" class="btn btn-primary btn-sm btn-edit"><i class="fas fa-pen"></i></button>` +
+                            `<button type="button" class="btn btn-danger btn-sm ms-2"><i class="fas fa-trash"></i></button>`;
+                    },
+                    orderable: false,
+                    searchable: false,
+                    width: "80px",
+                }
+            ],
+            order: [[2, 'desc']],
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            }
+        });
+
+        function AbrirModal(data) {
+            LimpiarCampos();
+
+            if (data != null) {
+
+                $("#rolId").val(data.IdRol);
+                $("#nombre").val(data.NombreRol);
+                $("#descripcion").val(data.DescripcionRol);
+                $("#cboEstado").val(data.Estado == true ? 1 : 0);
+            }
+
+            $("#mensajeError").hide().text("");
+            $("#modalRolAdd").modal("show");
+        }
+
+        function LimpiarCampos() {
+            $("#rolId").val(0);
+            $("#nombre").val("");
+            $("#descripcion").val("");
+            $("#cboEstado").val("1");
+            $("#mensajeError").hide().text("");
+        }
+
+        // Evento para abrir el modal de edición con datos de la categoria seleccionada
+        $('#tbDataRol tbody').on('click', '.btn-edit', function () {
+            selectRow = $(this).closest('tr');
+            var data = dataTable.row(selectRow).data();
+            AbrirModal(data);
+        });
+
+        function GuardarRol() {
+            var objRol = {
+                IdRol: $("#rolId").val(),
+                NombreRol: $("#nombre").val(),
+                DescripcionRol: $("#descripcion").val(),
+                Estado: $("#cboEstado").val() == 1 ? true : false
+            };
+
+            $.ajax({
+                url: '@Url.Action("GuardarRol", "Rol")',
+                type: "POST",
+                data: JSON.stringify(objRol),
+                contentType: "application/json; charset=utf-8",
+                beforeSend: () => {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size: 12
+                    });
+                },
+                success: function (data) {
+                    $(".modal-body").LoadingOverlay("hide");
+                    if (objRol.IdRol == 0) {
+                        if (data.respuesta != 0) {
+                            objRol.IdRol = data.respuesta;
+                            dataTable.row.add(objRol).draw(false);
+                            Swal.fire("Guardado", data.message, "success");
+                            $("#modalRolAdd").modal("hide");
+                        } else {
+                            Swal.fire("Error", data.message, "error");
+                        }
+                    }
+                    else {
+                        if (data.respuesta) {
+                            dataTable.row(selectRow).data(objRol).draw(false);
+                            selectRow = null;
+                            Swal.fire("Guardado", data.message, "success");
+                            $("#modalRolAdd").modal("hide");
+                        }
+                        else {
+                            Swal.fire("Error", data.message, "error");
+                        }
+                    }
+                },
+                error: function () {
+                    $(".modal-body").LoadingOverlay("hide");
+                    Swal.fire("Error", "Ocurrió un error inesperado al guardar el rol")
+                }
+            });
+        }
+
+        // Evento para eliminar una categoria
+        $('#tbDataRol tbody').on('click', '.btn-danger', function () {
+            selectRow = $(this).closest('tr');
+            var data = dataTable.row(selectRow).data();
+
+            Swal.fire({
+                title: "¿Está seguro?",
+                text: `¿Desea eliminar el rol ${data.IdRol} - ${data.NombreRol}?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sí, eliminar"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarRol", "Rol")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.IdRol }),
+                        contentType: "application/json; charset=utf-8",
+                        success: response => {
+                            if (response.success) {
+                                Swal.fire("Eliminado", response.message, ",success");
+                                dataTable.ajax.reload();
+                            } else {
+                                Swal.fire("Error", response.message, "error");
+                            }
+                        },
+                        error: () => Swal.fire("Error", "Ocurrió un error al eliminar el rol.", "error")
+                    });
+                }
+            });
+        });
+    </script>
+}

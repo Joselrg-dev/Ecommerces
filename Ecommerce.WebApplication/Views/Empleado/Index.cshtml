@@ -1,0 +1,330 @@
+﻿@model List<Ecommerce.CpEntities.Models.Empleados>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string descripcion = "Lista de empleados";
+}
+
+<ol class="breadcrumb mt-3 mb-2">
+    <li class="breadcrumb-item">Gestión de usuarios</li>
+    <li class="breadcrumb-item active">Usuarios</li>
+</ol>
+<hr />
+
+<div class="card shadow mb-3">
+    <div class="card-header fw-bold bg-body-secondary text-dark">
+        <h5 class="m-0 fw-bold text-black"><i class="fas fa-users me-2"></i>@descripcion</h5>
+    </div>
+    <div class=" card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="button" id="btnEmpleadoAdd" class="btn btn-success btn-sm fw-bold" data-bs-toggle="modal" onclick="AbrirModal(null)"><i class="fas fa-plus-circle me-2"></i>Nuevo Empleado</button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover display cell-border" id="tbDataEmpleado" cellspacing="1" style="width:100%">
+                    <thead class="bg-body-secondary">
+                        <tr class="text-success-emphasis">
+                            <th class="text-center">Código</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">1er. Apellido</th>
+                            <th class="text-center">2do. Apellido</th>
+                            <th class="text-center">Telefono</th>
+                            <th class="text-center">Dirección</th>
+                            <th class="text-center">Correo</th>
+                            <th class="text-center">Rol</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEmpleadoAdd" tabindex="-1" aria-labelledby="empleadoModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark fw-bold text-white">
+                <h5 class="modal-title" id="empleadoModalLabel">Nuevo Empleado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row g-sm-2">
+                        <input id="empleadoId" type="hidden" value="0" />
+                        <div class="form-group col-sm-6">
+                            <label for="codigo" class="form-label fw-bold">Código</label>
+                            <input type="text" class="form-control form-control-sm" id="codigo" name="codigo">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="nombre" class="form-label fw-bold">Nombre</label>
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="apellido1" class="form-label fw-bold">1er. Apellido</label>
+                            <input type="text" class="form-control form-control-sm" id="apellido1" name="apellido1">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="apellido2" class="form-label fw-bold">2do. Apellido</label>
+                            <input type="text" class="form-control form-control-sm" id="apellido2" name="apellido2">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="telefono" class="form-label fw-bold">Telefono</label>
+                            <input type="text" class="form-control form-control-sm" id="telefono" name="telefono">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="direccion" class="form-label fw-bold">Dirección</label>
+                            <textarea type="text" class="form-control form-control-sm input-validar" id="direccion" style="height:100px; resize:none" name="direccion"></textarea>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="correo" class="form-label fw-bold">Correo</label>
+                            <input type="text" class="form-control form-control-sm" id="correo" name="correo">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="cboRoles" class="form-label fw-bold">Cargo</label>
+                            <select class="form-control form-select-sm" id="cboRoles"></select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="cboEstado" class="form-label fw-bold">Estado</label>
+                            <select id="cboEstado" class="form-select">
+                                <option value="1">Activo</option>
+                                <option value="0">No Activo</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!--Mensaje de alerta-->
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarEmpleado" class="btn btn-primary" onclick=" GuardarEmpleado()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        var dataTable;
+        var selectRow;
+
+        cargarRoles();
+        // Configuración de DataTable
+        dataTable = $("#tbDataEmpleado").DataTable({
+            responsive: true,
+            ordering: false,
+            ajax: {
+                url: '@Url.Action("ListarEmpleado", "Empleado")',
+                type: "GET",
+                dataType: "json"
+            },
+            columns: [
+                { data: "CodigoEmpleado", className: "text-center" },
+                { data: "NombreEmpleado", className: "text-center"  },
+                { data: "Apellido1Empleado", className: "text-center" },
+                { data: "Apellido2Empleado", className: "text-center" },
+                { data: "TelefonoEmpleado", className: "text-center" },
+                { data: "DireccionEmpleado", className: "text-center" },
+                { data: "CorreoEmpleado", className: "text-center" },
+                {
+                    data: "Roles",
+                    render: data => data?.NombreRol || "Sin categoria"
+
+                },
+                {
+                    data: "Estado", className: "text-center",
+                    render: valor => valor
+                        ? '<span class="badge bg-info">Activo</span>'
+                        : '<span class="badge bg-warning">No Activo</span>'
+
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `<button type="button" class="btn btn-primary btn-sm btn-edit"><i class="fas fa-pen"></i></button>` +
+                            `<button type="button" class="btn btn-danger btn-sm ms-2"><i class="fas fa-trash"></i></button>`;
+                    },
+                    orderable: false,
+                    searchable: false,
+                    width: "80px",
+                }
+            ],
+            order: [[2, 'desc']],
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            }
+        });
+
+        function cargarRoles() {
+            $.ajax({
+                url: '@Url.Action("ListarRol", "Rol")',
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    const $combo = $("#cboRoles");
+                    $combo.empty().append($("<option>", { value: "0", text: "Seleccione un rol" }));
+                    data.data.forEach(item => {
+                        $combo.append($("<option>", { value: item.IdRol, text: item.NombreRol }));
+                    });
+                },
+                error: () => {
+                    Swal.fire("Error", "No se cargarón los roles.", "error");
+                }
+            });
+        }
+
+        function AbrirModal(data) {
+            LimpiarCampos();
+
+            if (data != null) {
+
+                $("#empleadoId").val(data.IdEmpleado);
+                $("#codigo").val(data.CodigoEmpleado);
+                $("#nombre").val(data.NombreEmpleado);
+                $("#apellido1").val(data.Apellido1Empleado);
+                $("#apellido2").val(data.Apellido2Empleado);
+                $("#telefono").val(data.TelefonoEmpleado);
+                $("#direccion").val(data.DireccionEmpleado);
+                $("#correo").val(data.CorreoEmpleado);
+                $("#cboRoles").val(data.Roles?.IdRol || "0");
+                $("#cboEstado").val(data.Estado == true ? 1 : 0);
+            }
+
+            $("#mensajeError").hide().text("");
+            $("#modalEmpleadoAdd").modal("show");
+        }
+
+        function LimpiarCampos() {
+            $("#empleadoId").val(0);
+            $("#codigo").val("");
+            $("#nombre").val("");
+            $("#apellido1").val("");
+            $("#apellido2").val("");
+            $("#telefono").val("");
+            $("#direccion").val("");
+            $("#correo").val("");
+            $("#cboRoles").val("0");
+            $("#cboEstado").val("1");
+            $("#mensajeError").hide().text("");
+        }
+
+        // Evento para abrir el modal de edición con datos de la categoria seleccionada
+        $('#tbDataEmpleado tbody').on('click', '.btn-edit', function () {
+            selectRow = $(this).closest('tr');
+            var data = dataTable.row(selectRow.hasClass('child') ? selectRow.prev() : selectRow).data();
+            AbrirModal(data);
+        });
+
+        function GuardarEmpleado() {
+            var objEmpleado = {
+                IdEmpleado: $("#empleadoId").val(),
+                CodigoEmpleado: $("#codigo").val(),
+                NombreEmpleado: $("#nombre").val(),
+                Apellido1Empleado: $("#apellido1").val(),
+                Apellido2Empleado: $("#apellido2").val(),
+                TelefonoEmpleado: $("#telefono").val(),
+                DireccionEmpleado: $("#direccion").val(),
+                CorreoEmpleado: $("#correo").val(),
+                Roles: {
+                    IdRol: $("#cboRoles option:selected").val(),
+                    NombreRol: $("#cboRoles option:selected").text()
+                },
+                /*IdRol: parseInt($("#cboRoles").val()),*/
+                Estado: $("#cboEstado").val() == 1 ? true : false
+            };
+
+            $.ajax({
+                url: '@Url.Action("GuardarEmpleado", "Empleado")',
+                type: "POST",
+                data: JSON.stringify(objEmpleado),
+                contentType: "application/json; charset=utf-8",
+                beforeSend: () => {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size: 12
+                    });
+                },
+                success: function (data) {
+                    $(".modal-body").LoadingOverlay("hide");
+                    if (objEmpleado.IdEmpleado == 0) {
+                        if (data.respuesta != 0) {
+                            objEmpleado.IdEmpleado = data.respuesta;
+                            dataTable.row.add(objEmpleado).draw(false);
+                            Swal.fire("Guardado", data.message, "success");
+                            dataTable.ajax.reload();
+                            $("#modalEmpleadoAdd").modal("hide");
+                        } else {
+                            Swal.fire("Error", data.message, "error");
+                        }
+                    }
+                    else {
+                        if (data.respuesta) {
+                            dataTable.row(selectRow).data(objEmpleado).draw(false);
+                            selectRow = null;
+                            Swal.fire("Guardado", data.message, "success");
+                            dataTable.ajax.reload();
+                            $("#modalEmpleadoAdd").modal("hide");
+                        }
+                        else {
+                            Swal.fire("Error", data.message, "error");
+                        }
+                    }
+                },
+                error: function () {
+                    $(".modal-body").LoadingOverlay("hide");
+                    Swal.fire("Error", "Ocurrió un error inesperado al guardar el empleado")
+                }
+            });
+        }
+
+        // Evento para eliminar un empleado
+        $('#tbDataEmpleado tbody').on('click', '.btn-danger', function () {
+            selectRow = $(this).closest('tr');
+            var data = dataTable.row(selectRow.hasClass('child') ? selectRow.prev() : selectRow).data();
+
+            Swal.fire({
+                title: "¿Está seguro?",
+                text: `¿Desea eliminar el empleado ${data.CodigoEmpleado} - ${data.NombreEmpleado}?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sí, eliminar"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarEmpleado", "Empleado")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.IdEmpleado }),
+                        contentType: "application/json; charset=utf-8",
+                        success: response => {
+                            if (response.success) {
+                                Swal.fire("Eliminado", response.message, ",success");
+                                dataTable.ajax.reload();
+                            } else {
+                                Swal.fire("Error", response.message, "error");
+                            }
+                        },
+                        error: () => Swal.fire("Error", "Ocurrió un error al eliminar el empleado.", "error")
+                    });
+                }
+            });
+        });
+    </script>
+}
