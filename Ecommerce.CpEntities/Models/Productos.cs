@@ -45,6 +45,12 @@ namespace Ecommerce.CpEntities.Models
 
         public int? IdCategoria { get; set; }
 
+        public string PrecioTexto { get; set; }
+
+        public string Extension { get; set; }
+
+        public string Base64 { get; set; }
+
         public virtual Categorias Categorias { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

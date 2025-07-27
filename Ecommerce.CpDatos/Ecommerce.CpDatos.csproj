@@ -54,10 +54,12 @@
     <Compile Include="Interfaces\ICategoriaRepositorio.cs" />
     <Compile Include="Interfaces\IClienteRepositorio.cs" />
     <Compile Include="Interfaces\IEmpleadoRepositorio.cs" />
+    <Compile Include="Interfaces\IProductoRepositorio.cs" />
     <Compile Include="Interfaces\IRolRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\CategoriaRepositorio.cs" />
     <Compile Include="Repositorio\EmpleadoRepositorio.cs" />
+    <Compile Include="Repositorio\ProductoRepositorio.cs" />
     <Compile Include="Repositorio\RolRepositorio.cs" />
   </ItemGroup>
   <ItemGroup>

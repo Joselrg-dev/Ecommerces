@@ -42,7 +42,7 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Resumen</div>
-                        <a class="nav-link" href="@Url.Action("Index", "Dashboards")">
+                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Tablero
                         </a>
@@ -56,7 +56,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="@Url.Action("Index", "Categoria")"><i class="fas fa-tags me-2"></i>Categorías</a>
                                 <a class="nav-link" href="@Url.Action("Index", "Inventario")"><i class="fas fa-warehouse me-2"></i>Inventario</a>
-                                <a class="nav-link" href="@Url.Action("Index", "Platillo")"><i class="fas fa-utensils me-2"></i>Platillos</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Producto")"><i class="fas fa-shopping-basket me-2"></i>Producto</a>
                             </nav>
                         </div>
 
@@ -72,12 +72,16 @@
                         </a>
 
                         <div class="sb-sidenav-menu-heading">Administración</div>
-                        <a class="nav-link" href="@Url.Action("Index", "Empleado")">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>
-                            Usuarios
-                        </a>
                         <a class="nav-link" href="@Url.Action("Index", "Cliente")">
                             <div class="sb-nav-link-icon"><i class="fas fa-user-friends"></i></div>
+                            Clientes
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Index", "Empleado")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Usuarios
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Index", "Rol")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-shield-alt"></i></div>
                             Clientes
                         </a>
 
@@ -110,7 +114,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted"><strong>Copyright &copy; PerlSoft 2025</strong></div>
+                        <div class="text-muted"><strong>Copyright &copy; Variedades Jaho-Máltex 2025</strong></div>
                         <div>
                             <a href="#!">Política de privacidad</a>
                             &middot;

@@ -53,11 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202507230352598_InitialMigration.cs" />
-    <Compile Include="Migrations\202507230352598_InitialMigration.designer.cs">
-      <DependentUpon>202507230352598_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Categorias.cs" />
     <Compile Include="Models\Clientes.cs" />
     <Compile Include="Models\DetalleFacturaVentas.cs" />
@@ -75,11 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202507230352598_InitialMigration.resx">
-      <DependentUpon>202507230352598_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
