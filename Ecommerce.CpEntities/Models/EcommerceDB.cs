@@ -44,6 +44,10 @@ namespace Ecommerce.CpEntities.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Clientes>()
+                .Property(e => e.Apellido2Cliente)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Clientes>()
                 .Property(e => e.CorreoCliente)
                 .IsUnicode(false);
 
@@ -65,10 +69,6 @@ namespace Ecommerce.CpEntities.Models
 
             modelBuilder.Entity<Empleados>()
                 .Property(e => e.Apellido2Empleado)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Empleados>()
-                .Property(e => e.TelefonoEmpleado)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Empleados>()

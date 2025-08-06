@@ -14,7 +14,7 @@ namespace Ecommerce.CpEntities.Models
 
         public int? IdProducto { get; set; }
 
-        public int? StockProductos { get; set; }
+        public int? CantidadProductos { get; set; }
 
         public virtual Productos Productos { get; set; }
     }

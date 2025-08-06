@@ -19,7 +19,7 @@ namespace Ecommerce.CpEntities.Models
         public int IdCliente { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(10)]
         public string CodigoCliente { get; set; }
 
         [Required]
@@ -29,6 +29,10 @@ namespace Ecommerce.CpEntities.Models
         [Required]
         [StringLength(100)]
         public string Apellido1Cliente { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Apellido2Cliente { get; set; }
 
         public int? TelefonoCliente { get; set; }
 

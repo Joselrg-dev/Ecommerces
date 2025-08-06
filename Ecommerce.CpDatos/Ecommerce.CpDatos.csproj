@@ -60,6 +60,7 @@
     <Compile Include="Repositorio\CategoriaRepositorio.cs" />
     <Compile Include="Repositorio\EmpleadoRepositorio.cs" />
     <Compile Include="Repositorio\ProductoRepositorio.cs" />
+    <Compile Include="Repositorio\ReporteRepositorio.cs" />
     <Compile Include="Repositorio\RolRepositorio.cs" />
   </ItemGroup>
   <ItemGroup>

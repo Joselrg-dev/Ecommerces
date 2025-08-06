@@ -55,12 +55,14 @@
   <ItemGroup>
     <Compile Include="Models\Categorias.cs" />
     <Compile Include="Models\Clientes.cs" />
+    <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\DetalleFacturaVentas.cs" />
     <Compile Include="Models\EcommerceDB.cs" />
     <Compile Include="Models\Empleados.cs" />
     <Compile Include="Models\FacturaVentas.cs" />
     <Compile Include="Models\Inventarios.cs" />
     <Compile Include="Models\Productos.cs" />
+    <Compile Include="Models\Reporte.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
