@@ -50,11 +50,13 @@ namespace Ecommerce.CpDatos.Repositorio
         {
             var listReport = new List<Reporte>();
             using (var conn = DbConnectionHelper.GetConnection())
-            using (var cmd = new SqlCommand("sp_ReporteVentas", conn))
+            using (var cmd = new SqlCommand("sp_reporteVentas", conn))
             {
-                cmd.Parameters.AddWithValue("FechaInicio", fechaInicio);
-                cmd.Parameters.AddWithValue("FechaFin", fechaFin);
-                cmd.Parameters.AddWithValue("codigoTransaccion", codigoTransaccion);
+                cmd.Parameters.Add("@FechaInicio", SqlDbType.VarChar, 10).Value = fechaInicio;
+                 cmd.Parameters.Add("@FechaFin", SqlDbType.VarChar, 10).Value = fechaFin;
+                cmd.Parameters.Add("@codigoTransaccion", SqlDbType.VarChar, 50)
+              .Value = string.IsNullOrEmpty(codigoTransaccion) ? (object)DBNull.Value : codigoTransaccion;
+
                 cmd.CommandType = CommandType.StoredProcedure;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
@@ -65,13 +67,13 @@ namespace Ecommerce.CpDatos.Repositorio
                         var report = new Reporte
                         {
                             FechaVenta = reader["FechaVenta"].ToString(),
-                            CodigoFactura = reader["Codigo"].ToString(),
+                            CodigoFactura = reader["CodigoFactura"].ToString(),
                             Cliente = reader["Cliente"].ToString(),
                             Producto = reader["Producto"].ToString(),
                             Cantidad = Convert.ToInt32(reader["Cantidad"]),
-                            Precio = Convert.ToDecimal(reader["PrecioUnitario"], new CultureInfo("es_NI")),
-                            Subtotal = Convert.ToDecimal(reader["Subtotal"], new CultureInfo("es_NI")),
-                            MetodoPago = reader["MetodoPago"].ToString(),
+                            Precio = Convert.ToDecimal(reader["Precio"], new CultureInfo("es_NI")),
+                            //Subtotal = Convert.ToDecimal(reader["Subtotal"], new CultureInfo("es_NI")),
+                            //MetodoPago = reader["MetodoPago"].ToString(),
                             Total = Convert.ToDecimal(reader["Total"], new CultureInfo("es_NI"))
                         };
 

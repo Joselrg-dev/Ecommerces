@@ -54,7 +54,30 @@ namespace Ecommerce.CpDatos.Repositorio
 
         public bool CambiarContraseña(int idUsuario, string nuevaContra, out string mensaje)
         {
-            throw new NotImplementedException();
+            bool resultado;
+            mensaje = string.Empty;
+
+            try
+            {
+                using (var conn = DbConnectionHelper.GetConnection())
+                using (var cmd = new SqlCommand("UPDATE sr.Empleados SET Clave = @nuevaContra, Reestablecer = 0 where IdEmpleado = @Id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", idUsuario);
+                    cmd.Parameters.AddWithValue("@nuevaContra", nuevaContra);
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open();
+                    resultado = cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
+                mensaje = ex.Message;
+            }
+
+            return resultado;
         }
 
         public bool Eliminar(int id, out string mensaje)
@@ -189,7 +212,30 @@ namespace Ecommerce.CpDatos.Repositorio
 
         public bool ReestablecerContraseña(int idUsuario, string nuevaContra, out string mensaje)
         {
-            throw new NotImplementedException();
+            bool resultado;
+            mensaje = string.Empty;
+
+            try
+            {
+                using (var conn = DbConnectionHelper.GetConnection())
+                using (var cmd = new SqlCommand("UPDATE sr.empleados SET Clave = @clave, Reestablecer = 1 where IdEmpleado = @Id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", idUsuario);
+                    cmd.Parameters.AddWithValue("@clave", nuevaContra);
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open();
+                    resultado = cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
+                mensaje = ex.Message;
+            }
+
+            return resultado;
         }
     }
 }

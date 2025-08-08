@@ -14,8 +14,8 @@ namespace Ecommerce.CpEntities.Models
         public string Producto { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
-        public decimal Subtotal { get; set; }
-        public string MetodoPago { get; set; }
+        //public decimal Subtotal { get; set; }
+        //public string MetodoPago { get; set; }
         public decimal Total { get; set; }
     }
 

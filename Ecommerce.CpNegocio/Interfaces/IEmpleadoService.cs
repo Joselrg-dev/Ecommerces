@@ -18,5 +18,10 @@ namespace Ecommerce.CpNegocio.Interfaces
         bool Actualizar(Empleados empleados, out string mensaje);
 
         bool Eliminar(int id, out string mensaje);
+
+        bool CambiarContraseña(int idUsuario, string correo, out string mensaje);
+
+        bool ReestablecerContraseña(int idUsuario, string correo, out string mensaje);
+
     }
 }

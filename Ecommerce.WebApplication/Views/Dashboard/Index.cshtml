@@ -4,5 +4,232 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<ol class="breadcrumb mt-2 mb-4">
+    <li class="h5|
+        breadcrumb-item active">Dashboard</li>
+</ol>
+<div class="row">
+    <div class="col-xl-4 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad Cliente</h6>
+                        <h6 id="cantidadClientes">0</h6>
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="@Url.Action("Index", "Cliente")">Ver detalle</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card bg-secondary text-white mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad Pedidos</h6>
+                        <h6 id="cantidadPedidos">0</h6>
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="fas fa-receipt fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="@Url.Action("Index", "Pedido")">Ver detalle</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card bg-info text-white mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad Ventas</h6>
+                        <h6 id="cantidadVentas">0</h6>
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="fa fa-shopping-cart fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="@Url.Action("Index", "Venta")">Ver detalle</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="row">
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Area Chart Example
+                </div>
+                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    Bar Chart Example
+                </div>
+                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+            </div>
+        </div>
+    </div>*@
 
+
+<div class="card mb-4">
+    <div class="card-header fw-bold">
+        <i class="fas fa-tags me-1"></i>
+        Historial de venta
+    </div>
+    <div class="card-body">
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="@Url.Action("ExportarVentaExcel", "Dashboard")" method="post">
+            <div class="row align-items-end">
+                <div class="col-sm-2">
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Fecha de Inicio</label>
+                        <input class="form-control" type="text" id="txtFechaInicio" name="fechaInicio" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Fecha Fin</label>
+                        <input class="form-control" type="text" id="txtFechaFin" name="fechaFin" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Código Factura</label>
+                        <input class="form-control" type="text" id="txtCodigoFactura" name="codigoFactura" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-primary fw-bold" id="btnBuscarRegistro" type="button"><i class="fas fa-search"></i> Buscar</button>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-danger fw-bold" id="btnExportarPdf" type="submit"><i class="fas fa-file-pdf"></i> Exportar</button>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-success fw-bold" id="btnExportarExcel" type="submit"><i class="fas fa-file-excel"></i> Exportar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <hr class="border-2" />
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover display cell-border" id="tbDataVenta" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="justify-content-between">Fecha Venta</th>
+                            <th class="justify-content-between">Código Factura</th>
+                            <th class="justify-content-between">Cliente</th>
+                            <th class="justify-content-between">Producto</th>
+                            <th class="justify-content-between">Cantidad</th>
+                            <th class="justify-content-between">Precio</th>
+                            @*<th class="justify-content-between">Subtotal</th>
+                            <th class="justify-content-between">Metodo de Pago</th>*@
+                            <th class="justify-content-between">Total</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#txtFechaInicio").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date())
+            $("#txtFechaFin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date())
+
+            jQuery.ajax({
+                url: '@Url.Action("VistaDashboard", "Dashboard")',
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    var objeto = data.resultado;
+
+                    $("#cantidadClientes").text(objeto.TotalCliente)
+                    $("#cantidadPedidos").text(objeto.TotalPedidos)
+                    $("#cantidadVentas").text(objeto.TotalVentas)
+                }
+            });
+
+            // Continuamos con la funcionalidad de exportar en formato excel
+            var urlCompuesta = '@Url.Action("ListarReporte", "Dashboard")' +
+                "?fechaInicio=" + $("#txtFechaInicio").val() +
+                "&fechaFin=" + $("#txtFechaFin").val() +
+                "&codigoFactura=" + $("#txtCodigoFactura").val()
+
+            let tablaDato;
+
+            tablaDato = $("#tbDataVenta").DataTable({
+                responsive: true,
+                ordering: false,
+                ajax: {
+                    url: urlCompuesta,
+                    type: "GET",
+                    dataType: "json",
+                    error: function (xhr, error, thrown) {
+                        console.error("Error al cargar datos:", xhr.responseText);
+                    }
+                },
+                columns: [
+                    { data: "FechaVenta" },
+                    { data: "CodigoFactura" },
+                    { data: "Cliente" },
+                    { data: "Producto" },
+                    { data: "Cantidad" },
+                    {
+                        data: "Precio",
+                        render: $.fn.dataTable.render.number(',', '.', 2, 'C$ ')
+                    },
+                    //{ data: "Subtotal" },
+                    //{ data: "MetodoPago" },
+                    {
+                        data: "Total",
+                        render: $.fn.dataTable.render.number(',', '.', 2, 'C$ ')
+                    },
+                ],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+
+            $("#btnBuscarRegistro").on("click", function () {
+
+                let nuevaUrl = '@Url.Action("ListarReporte", "Dashboard")' +
+                    "?fechaInicio=" + $("#txtFechaInicio").val() +
+                    "&fechaFin=" + $("#txtFechaFin").val() +
+                    "&codigoFactura=" + $("#txtCodigoFactura").val()
+
+                tablaDato.ajax.url(nuevaUrl).load()
+            });
+        });
+    </script>
+}
