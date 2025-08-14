@@ -32,7 +32,7 @@ namespace Ecommerce.CpDatos.Repositorio
                             {
                                 TotalCliente = Convert.ToInt32(reader["TotalCliente"]),
                                 TotalVentas = Convert.ToInt32(reader["TotalVentas"]),
-                                TotalPedidos = Convert.ToInt32(reader["TotalPedidos"]),
+                                TotalProductos = Convert.ToInt32(reader["TotalProductos"]),
                             };
                         }
                     }

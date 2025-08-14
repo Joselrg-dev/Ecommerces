@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cambiar Contraseña</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        
+                    </svg>
+                </div>
+                <h1>SecureBank</h1>
+                <p>Cambia tu contraseña para continuar</p>
+            </div>
+
+            <form method="post" action="@Url.Action("CambiarClave", "Acceso")">
+                <input class="form-control" type="text" value="@TempData["IdEmpleado"]" name="idEmpleado">
+                <div class="form-group">
+                    <label for="actualClave">Contraseña Actual</label>
+                    <input type="password" id="actualClave" name="actualClave" value="@ViewData["viewClave"]" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nuevaClave">Nueva Contraseña</label>
+                    <input type="password" id="nuevaClave" name="nuevaClave" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarClave">Confirmar Contraseña</label>
+                    <input type="password" id="confirmarClave" name="confirmarClave" required>
+                </div>
+
+                @{
+                    if (ViewBag.Error != null)
+                    {
+                        <div class="custom-alert" role="alert">
+                            @ViewBag.Error
+                        </div>
+                    }
+                }
+
+
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">Guardar</span>
+                </button>
+            </form>
+
+            <div class="card-footer text-center py-2">
+                <div class="small"><a class="forgot-link" href="@Url.Action("Index", "Acceso")">Volver</a></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

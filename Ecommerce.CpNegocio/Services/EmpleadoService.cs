@@ -14,6 +14,10 @@ namespace Ecommerce.CpNegocio.Services
     {
         private readonly IEmpleadoRepositorio _empleadoRepo;
 
+        public EmpleadoService()
+        {
+        }
+
         public EmpleadoService(IEmpleadoRepositorio empleadoRepositorio)
         {
             _empleadoRepo = empleadoRepositorio;

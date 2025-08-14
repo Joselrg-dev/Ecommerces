@@ -18,15 +18,13 @@
             <div class="login-header">
                 <div class="logo">
                     <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                        <rect width="36" height="36" rx="8" fill="#6366F1" />
-                        <path d="M12 14h12v8H12v-8zm2 2v4h8v-4h-8zm-2-4h12v2H12v-2zm0 12h12v2H12v-2z" fill="white" />
                     </svg>
                 </div>
-                <h1>SecureBank</h1>
+                <h1>Variedades Jaho-Máltez</h1>
                 <p>Access your account securely</p>
             </div>
 
-            <form class="login-form" id="loginForm" novalidate>
+            <form class="login-form" id="loginForm" autocomplete="off" action="@Url.Action("Index", "Acceso")" method="post" novalidate>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required autocomplete="email">
@@ -66,13 +64,14 @@
                 </button>
             </form>
 
-            <div class="security-notice">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 1L3 3v4.5c0 2.89 2 5.5 5 6 3-0.5 5-3.11 5-6V3l-5-2z" stroke="#10B981" stroke-width="1.5" fill="none" />
-                    <path d="M6 8l1.5 1.5L11 6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <span>Your connection is secured with 256-bit SSL encryption</span>
-            </div>
+            @{
+                if (ViewBag.Error != null)
+                {
+                    <div class="custom-alert" role="alert">
+                        @ViewBag.Error
+                    </div>
+                }
+            }
 
             <div class="success-message" id="successMessage">
                 <div class="success-icon">
@@ -84,6 +83,12 @@
                 <h3>Welcome back</h3>
                 <p>Taking you to your dashboard...</p>
             </div>
+
+            <p class="login-header">
+                <span class="register-wrapper"></span>
+                ¿No tienes una cuenta?
+                <a class="forgot-link" href="/register">Regístrate</a>
+            </p>
         </div>
     </div>
 

@@ -158,6 +158,15 @@ body {
         display: none;
     }
 
+.register-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 13px;
+    color: #374151;
+    font-weight: 500;
+}
+
 .checkmark {
     width: 16px;
     height: 16px;

@@ -99,6 +99,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.CpEntities\Ecommerce.CpEntities.csproj">
+      <Project>{A5F18FD0-5DD2-4B36-9A2A-C5F15C95C1BD}</Project>
+      <Name>Ecommerce.CpEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ecommerce.CpNegocio\Ecommerce.CpNegocio.csproj">
+      <Project>{BB4B1D51-C3B8-4301-8980-C024CD7B6615}</Project>
+      <Name>Ecommerce.CpNegocio</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ecommerce.WebApplication\Ecommerce.WebApplication.csproj">
       <Project>{3061F167-C222-48C4-BD11-3C87F5F5AE85}</Project>
       <Name>Ecommerce.WebApplication</Name>
