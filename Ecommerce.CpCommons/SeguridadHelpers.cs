@@ -66,7 +66,7 @@ namespace Ecommerce.CpCommons
 
                 var smtp = new SmtpClient()
                 {
-                    Credentials = new NetworkCredential("jr7035960@gmail.com", "xsfviwdqictgnegv"),
+                    Credentials = new NetworkCredential("jr7035960@gmail.com", "ddsw rkue hiih neiq"),
                     Host = "smtp.gmail.com",
                     Port = 587,
                     EnableSsl = true

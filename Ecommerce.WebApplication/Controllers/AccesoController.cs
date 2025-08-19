@@ -60,29 +60,38 @@ namespace Ecommerce.WebApplication.Controllers
         [HttpPost]
         public ActionResult Index(string email, string password)
         {
-            // Buscar empleado con correo y contraseña encriptada
-            var objEmpleado = new EmpleadoService().ListarEmpleado()
-                .FirstOrDefault(user => user.CorreoEmpleado == email
-                                     && user.Clave == SeguridadHelpers.GetSHA256(password));
+            try
+            {
+                // Buscar empleado con correo y contraseña encriptada
+                var objEmpleado = new EmpleadoRepositorio().ObtenerTodos().Where(user => user.CorreoEmpleado == email
+                                         && user.Clave == SeguridadHelpers.GetSHA256(password)).FirstOrDefault();
 
-            if (objEmpleado == null)
-            {
-                // Credenciales inválidas → se notifica en la vista
-                ViewBag.Error = "Correo o Contraseña inválida";
-                return View();
-            }
-            else
-            {
-                // Si el empleado tiene flag de reestablecer, lo mandamos a cambiar clave
-                if ((bool)objEmpleado.Reestablecer)
+                if (objEmpleado == null)
                 {
-                    TempData["IdEmpleado"] = objEmpleado.IdEmpleado;
-                    return RedirectToAction("CambiarClave");
+                    // Credenciales inválidas → se notifica en la vista
+                    ViewBag.Error = "Usuario o clave incorrectos."; ;
+                    return View();
                 }
+                else
+                {
+                    // Si el empleado tiene flag de reestablecer, lo mandamos a cambiar clave
+                    if ((bool)objEmpleado.Reestablecer)
+                    {
+                        TempData["IdEmpleado"] = objEmpleado.IdEmpleado;
+                        return RedirectToAction("CambiarClave");
+                    }
 
-                // Autenticación exitosa → Dashboard
-                ViewBag.Error = null;
-                return RedirectToAction("Index", "Dashboard");
+                    // Autenticación exitosa → Dashboard
+                    ViewBag.Error = null;
+                    return RedirectToAction("Index", "Dashboard");
+                }
+            }
+            catch (Exception ex)
+            {
+                // “catch genérico”: evita error 500
+                ViewBag.Error = "Ocurrió un error inesperado. Intenta de nuevo." + ex.Message;
+                // opcional: loguear ex.Message
+                return View();
             }
         }
 

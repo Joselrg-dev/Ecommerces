@@ -1,5 +1,6 @@
 ﻿using Ecommerce.CpCommons;
 using Ecommerce.CpDatos.Interfaces;
+using Ecommerce.CpDatos.Repositorio;
 using Ecommerce.CpEntities.Models;
 using Ecommerce.CpNegocio.Interfaces;
 using System;
@@ -15,13 +16,13 @@ namespace Ecommerce.CpNegocio.Services
     {
         private readonly IEmpleadoRepositorio _empleadoRepo;
 
-        /// <summary>
-        /// Constructor por defecto (para compatibilidad).
-        /// </summary>
-        public EmpleadoService() { }
+        public EmpleadoService()
+        {
+            _empleadoRepo = new EmpleadoRepositorio(); // inicialización segura
+        }
 
         /// <summary>
-        /// Constructor con inyección de dependencias del repositorio.
+        /// Constructor obligatorio con inyección de dependencias.
         /// </summary>
         /// <param name="empleadoRepositorio">Repositorio de empleados</param>
         public EmpleadoService(IEmpleadoRepositorio empleadoRepositorio)
@@ -31,17 +32,11 @@ namespace Ecommerce.CpNegocio.Services
 
         #region CRUD
 
-        /// <summary>
-        /// Crea un nuevo empleado con contraseña temporal y envío de correo de bienvenida.
-        /// </summary>
         public int Crear(Empleados empleado, out string mensaje)
         {
             mensaje = string.Empty;
-
-            // Validación básica de campos obligatorios
             if (!ValidarEmpleado(empleado, out mensaje)) return 0;
 
-            // Generar contraseña temporal y mensaje de bienvenida
             string claveTemporal = SeguridadHelpers.GenerarClave();
             string asunto = "¡Bienvenido/a al sistema!";
             string cuerpoMensaje = $@"
@@ -57,7 +52,6 @@ namespace Ecommerce.CpNegocio.Services
                 <br>
                 <p>Atentamente,<br>El equipo de soporte</p>";
 
-            // Enviar correo de bienvenida
             if (SeguridadHelpers.EnviarCorreo(empleado.CorreoEmpleado, asunto, cuerpoMensaje))
             {
                 empleado.Clave = SeguridadHelpers.GetSHA256(claveTemporal);
@@ -68,9 +62,6 @@ namespace Ecommerce.CpNegocio.Services
             return 0;
         }
 
-        /// <summary>
-        /// Actualiza un empleado existente.
-        /// </summary>
         public bool Actualizar(Empleados empleado, out string mensaje)
         {
             mensaje = string.Empty;
@@ -83,9 +74,6 @@ namespace Ecommerce.CpNegocio.Services
             return _empleadoRepo.Actualizar(empleado, out mensaje);
         }
 
-        /// <summary>
-        /// Elimina un empleado por su Id.
-        /// </summary>
         public bool Eliminar(int id, out string mensaje)
         {
             if (id <= 0)
@@ -94,17 +82,11 @@ namespace Ecommerce.CpNegocio.Services
             return _empleadoRepo.Eliminar(id, out mensaje);
         }
 
-        /// <summary>
-        /// Obtiene la lista de todos los empleados.
-        /// </summary>
         public List<Empleados> ListarEmpleado()
         {
             return _empleadoRepo.ObtenerTodos();
         }
 
-        /// <summary>
-        /// Obtiene un empleado por su Id.
-        /// </summary>
         public Empleados ObtenerPorId(int id)
         {
             if (id <= 0)
@@ -117,9 +99,6 @@ namespace Ecommerce.CpNegocio.Services
 
         #region Gestión de Contraseñas
 
-        /// <summary>
-        /// Cambia la contraseña de un usuario existente.
-        /// </summary>
         public bool CambiarContraseña(int idUsuario, string clave, out string mensaje)
         {
             if (idUsuario <= 0)
@@ -128,9 +107,6 @@ namespace Ecommerce.CpNegocio.Services
             return _empleadoRepo.CambiarContraseña(idUsuario, clave, out mensaje);
         }
 
-        /// <summary>
-        /// Reestablece la contraseña de un usuario y envía un correo con la nueva contraseña.
-        /// </summary>
         public bool ReestablecerContraseña(int idUsuario, string correo, out string mensaje)
         {
             mensaje = string.Empty;
@@ -167,9 +143,6 @@ namespace Ecommerce.CpNegocio.Services
 
         #region Métodos Privados
 
-        /// <summary>
-        /// Valida los campos obligatorios de un empleado.
-        /// </summary>
         private bool ValidarEmpleado(Empleados empleado, out string mensaje)
         {
             mensaje = string.Empty;

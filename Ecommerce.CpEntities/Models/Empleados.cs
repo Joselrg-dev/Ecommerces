@@ -33,6 +33,7 @@ namespace Ecommerce.CpEntities.Models
         [StringLength(100)]
         public string Apellido2Empleado { get; set; }
 
+        [StringLength(25)]
         public string TelefonoEmpleado { get; set; }
 
         [StringLength(255)]

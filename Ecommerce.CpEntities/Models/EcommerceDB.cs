@@ -72,6 +72,10 @@ namespace Ecommerce.CpEntities.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Empleados>()
+                .Property(e => e.TelefonoEmpleado)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Empleados>()
                 .Property(e => e.DireccionEmpleado)
                 .IsUnicode(false);
 

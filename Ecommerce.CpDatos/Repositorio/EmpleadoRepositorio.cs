@@ -30,7 +30,7 @@ namespace Ecommerce.CpDatos.Repositorio
                     cmd.Parameters.AddWithValue("DireccionEmpleado", empleados.DireccionEmpleado);
                     cmd.Parameters.AddWithValue("TelefonoEmpleado", empleados.TelefonoEmpleado);
                     cmd.Parameters.AddWithValue("CorreoEmpleado", empleados.CorreoEmpleado);
-                    cmd.Parameters.AddWithValue("IdRol", empleados.IdRol);
+                    cmd.Parameters.AddWithValue("IdRol", empleados.Roles.IdRol);
                     cmd.Parameters.AddWithValue("Estado", empleados.Estado);
                     cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -124,11 +124,11 @@ namespace Ecommerce.CpDatos.Repositorio
                     cmd.Parameters.AddWithValue("NombreEmpleado", empleados.NombreEmpleado);
                     cmd.Parameters.AddWithValue("Apellido1Empleado", empleados.Apellido1Empleado);
                     cmd.Parameters.AddWithValue("Apellido2Empleado", empleados.Apellido2Empleado);
+                    cmd.Parameters.AddWithValue("IdRol", empleados.Roles.IdRol);
                     cmd.Parameters.AddWithValue("DireccionEmpleado", empleados.DireccionEmpleado);
                     cmd.Parameters.AddWithValue("TelefonoEmpleado", empleados.TelefonoEmpleado);
                     cmd.Parameters.AddWithValue("CorreoEmpleado", empleados.CorreoEmpleado);
                     cmd.Parameters.AddWithValue("ClaveEmpleado", empleados.Clave);
-                    cmd.Parameters.AddWithValue("IdRol", empleados.IdRol);
                     cmd.Parameters.AddWithValue("Estado", empleados.Estado);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -218,7 +218,7 @@ namespace Ecommerce.CpDatos.Repositorio
             try
             {
                 using (var conn = DbConnectionHelper.GetConnection())
-                using (var cmd = new SqlCommand("UPDATE sr.empleados SET Clave = @clave, Reestablecer = 1 where IdEmpleado = @Id", conn))
+                using (var cmd = new SqlCommand("UPDATE sr.Empleados SET Clave = @clave, Reestablecer = 1 where IdEmpleado = @Id", conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", idUsuario);
                     cmd.Parameters.AddWithValue("@clave", nuevaContra);

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.CpNegocio", "Ecom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.WebApplication", "Ecommerce.WebApplication\Ecommerce.WebApplication.csproj", "{3061F167-C222-48C4-BD11-3C87F5F5AE85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.WebApplication.Tests", "Ecommerce.WebApplication.Tests\Ecommerce.WebApplication.Tests.csproj", "{FB694B3C-4737-4770-A5FF-C593700E2DE0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.CpEntities", "Ecommerce.CpEntities\Ecommerce.CpEntities.csproj", "{A5F18FD0-5DD2-4B36-9A2A-C5F15C95C1BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.CpCommons", "Ecommerce.CpCommons\Ecommerce.CpCommons.csproj", "{0FD0EE47-DEF5-4FD3-97DA-227FE75CA1E5}"
@@ -29,10 +27,6 @@ Global
 		{3061F167-C222-48C4-BD11-3C87F5F5AE85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3061F167-C222-48C4-BD11-3C87F5F5AE85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3061F167-C222-48C4-BD11-3C87F5F5AE85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB694B3C-4737-4770-A5FF-C593700E2DE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB694B3C-4737-4770-A5FF-C593700E2DE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB694B3C-4737-4770-A5FF-C593700E2DE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB694B3C-4737-4770-A5FF-C593700E2DE0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5F18FD0-5DD2-4B36-9A2A-C5F15C95C1BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5F18FD0-5DD2-4B36-9A2A-C5F15C95C1BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F18FD0-5DD2-4B36-9A2A-C5F15C95C1BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
