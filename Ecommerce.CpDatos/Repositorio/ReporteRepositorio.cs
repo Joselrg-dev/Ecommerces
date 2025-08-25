@@ -63,7 +63,7 @@ namespace Ecommerce.CpDatos.Repositorio
                 {
                     while (reader.Read())
                     {
-                        // rept variable que almacena registro de ventas
+                        // report variable que almacena registro de ventas
                         var report = new Reporte
                         {
                             FechaVenta = reader["FechaVenta"].ToString(),

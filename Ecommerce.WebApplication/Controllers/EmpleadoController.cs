@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Ecommerce.WebApplication.Controllers
 {
+    
     /// <summary>
     /// Controlador encargado de gestionar la administración de empleados del e-commerce.
     /// Incluye operaciones CRUD.

@@ -1,4 +1,5 @@
 ﻿using Ecommerce.CpDatos.Interfaces;
+using Ecommerce.CpDatos.Repositorio;
 using Ecommerce.CpEntities.Models;
 using Ecommerce.CpNegocio.Interfaces;
 using System;

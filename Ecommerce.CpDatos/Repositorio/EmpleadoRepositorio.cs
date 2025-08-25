@@ -13,6 +13,17 @@ namespace Ecommerce.CpDatos.Repositorio
 {
     public class EmpleadoRepositorio : IEmpleadoRepositorio
     {
+        private EcommerceDB objCapaEntidad;
+
+        public EmpleadoRepositorio()
+        {
+        }
+
+        public EmpleadoRepositorio(EcommerceDB objCapaEntidad)
+        {
+            this.objCapaEntidad = objCapaEntidad;
+        }
+
         public bool Actualizar(Empleados empleados, out string mensaje)
         {
             bool resultado;
@@ -23,6 +34,7 @@ namespace Ecommerce.CpDatos.Repositorio
                 using (var conn = DbConnectionHelper.GetConnection())
                 using (var cmd = new SqlCommand("sp_actualizarEmpleado", conn))
                 {
+                    cmd.Parameters.AddWithValue("IdEmpleado", empleados.IdEmpleado);
                     cmd.Parameters.AddWithValue("CodigoEmpleado", empleados.CodigoEmpleado);
                     cmd.Parameters.AddWithValue("NombreEmpleado", empleados.NombreEmpleado);
                     cmd.Parameters.AddWithValue("Apellido1Empleado", empleados.Apellido1Empleado);
@@ -164,13 +176,13 @@ namespace Ecommerce.CpDatos.Repositorio
                 using (SqlConnection conn = DbConnectionHelper.GetConnection())
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("select e.CodigoEmpleado as 'Código', e.NombreEmpleado as 'Nombre',");
-                    sb.AppendLine("e.Apellido1Empleado as '1er. Apellido', e.Apellido2Empleado as '2do. Apellido',");
-                    sb.AppendLine("e.DireccionEmpleado as 'Dirección', e.TelefonoEmpleado as 'Telefono',");
-                    sb.AppendLine("e.CorreoEmpleado as 'Correo', r.IdRol, r.NombreRol as 'Rol', e.Estado");
-                    sb.AppendLine("from sr.Empleados e");
-                    sb.AppendLine("inner join sr.Roles r on r.IdRol = e.IdRol");
-
+                    sb.AppendLine("SELECT e.IdEmpleado, e.CodigoEmpleado, e.NombreEmpleado,");
+                    sb.AppendLine("e.Apellido1Empleado, e.Apellido2Empleado,");
+                    sb.AppendLine("e.DireccionEmpleado, e.TelefonoEmpleado,");
+                    sb.AppendLine("e.CorreoEmpleado, e.Clave, e.Estado, e.Reestablecer,");
+                    sb.AppendLine("r.IdRol, r.NombreRol");
+                    sb.AppendLine("FROM sr.Empleados e");
+                    sb.AppendLine("INNER JOIN sr.Roles r ON r.IdRol = e.IdRol");
 
                     SqlCommand cmd = new SqlCommand(sb.ToString(), conn)
                     {
@@ -183,19 +195,24 @@ namespace Ecommerce.CpDatos.Repositorio
                         {
                             var empleado = new Empleados
                             {
-                                CodigoEmpleado =  reader["Código"].ToString(),
-                                NombreEmpleado = reader["Nombre"].ToString(),
-                                Apellido1Empleado = reader["1er. Apellido"].ToString(),
-                                Apellido2Empleado = reader["2do. Apellido"].ToString(),
-                                DireccionEmpleado = reader["Dirección"].ToString(),
-                                TelefonoEmpleado = reader["Telefono"].ToString(),
-                                CorreoEmpleado = reader["Correo"].ToString(),
+                                IdEmpleado = Convert.ToInt32(reader["IdEmpleado"]),
+                                CodigoEmpleado = reader["CodigoEmpleado"].ToString(),
+                                NombreEmpleado = reader["NombreEmpleado"].ToString(),
+                                Apellido1Empleado = reader["Apellido1Empleado"].ToString(),
+                                Apellido2Empleado = reader["Apellido2Empleado"].ToString(),
+                                DireccionEmpleado = reader["DireccionEmpleado"].ToString(),
+                                TelefonoEmpleado = reader["TelefonoEmpleado"].ToString(),
+                                CorreoEmpleado = reader["CorreoEmpleado"].ToString(),
+                                Clave = reader["Clave"].ToString(),  
+                                Estado = Convert.ToBoolean(reader["Estado"]),
+                                Reestablecer = reader["Reestablecer"] == DBNull.Value
+                                               ? (bool?)null
+                                               : Convert.ToBoolean(reader["Reestablecer"]),
                                 Roles = new Roles
                                 {
                                     IdRol = Convert.ToInt32(reader["IdRol"]),
-                                    NombreRol = reader["Rol"].ToString(),
-                                },
-                                Estado = Convert.ToBoolean(reader["Estado"])
+                                    NombreRol = reader["NombreRol"].ToString(),
+                                }
                             };
                             listEmpleado.Add(empleado);
                         }
@@ -209,6 +226,7 @@ namespace Ecommerce.CpDatos.Repositorio
 
             return listEmpleado;
         }
+
 
         public bool ReestablecerContraseña(int idUsuario, string nuevaContra, out string mensaje)
         {
