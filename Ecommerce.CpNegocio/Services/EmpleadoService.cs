@@ -16,11 +16,6 @@ namespace Ecommerce.CpNegocio.Services
     {
         private readonly IEmpleadoRepositorio _empleadoRepo;
 
-        public EmpleadoService()
-        {
-            _empleadoRepo = new EmpleadoRepositorio(); // inicialización segura
-        }
-
         /// <summary>
         /// Constructor obligatorio con inyección de dependencias.
         /// </summary>

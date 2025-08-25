@@ -2,7 +2,7 @@
 @{
     Layout = null;
 }
-    
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -79,7 +79,7 @@
                                 </label>
                             </div>
 
-                            <a href="#" class="small">¿Olvidaste tu contraseña?</a>
+                            <a href="@Url.Action("ReestablecerContra", "Acceso")" class="small">¿Olvidaste tu contraseña?</a>
                         </div>
 
                         <button class="btn btn-brand btn-lg w-100 mb-3" type="submit">
@@ -100,14 +100,14 @@
                         <div class="mb-4 text-center">
                             <p class="text-secondary mt-3 mb-0">
                                 <i class="fa-regular fa-user me-1"></i>
-                                ¿No tienes cuenta? <a href="#">Regístrate</a>
+                                ¿No tienes cuenta? <a href="@Url.Action("Registrar", "Acceso")">Regístrate</a>
                             </p>
                         </div>
 
                         @{
                             if (ViewBag.Error != null)
                             {
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mt-3 mb-3">
                                     <div class="alert alert-danger" role="alert">
                                         @ViewBag.Error
                                     </div>
