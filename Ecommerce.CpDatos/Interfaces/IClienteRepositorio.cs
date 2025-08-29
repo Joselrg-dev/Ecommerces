@@ -13,10 +13,14 @@ namespace Ecommerce.CpDatos.Interfaces
 
         List<Clientes> ObtenerTodo();
 
-        void Insertar(Clientes clientes);
+        int Insertar(Clientes clientes, out string mensaje);
 
-        void Actualizar(Clientes clientes);
+        bool Actualizar(Clientes clientes, out string mensaje);
 
-        void Eliminar(int id);
+        bool Eliminar(int id, out string mensaje);
+
+        bool CambiarContraseña(int idCliente, string nuevaContra, out string mensaje);
+
+        bool ReestablecerContraseña(int idCliente, string nuevaContra, out string mensaje);
     }
 }

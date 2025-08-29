@@ -52,11 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ICategoriaService.cs" />
+    <Compile Include="Interfaces\IClienteService.cs" />
     <Compile Include="Interfaces\IEmpleadoService.cs" />
     <Compile Include="Interfaces\IProductoService.cs" />
     <Compile Include="Interfaces\IRolServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoriaService.cs" />
+    <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\EmpleadoService.cs" />
     <Compile Include="Services\ProductoService.cs" />
     <Compile Include="Services\ReporteService.cs" />

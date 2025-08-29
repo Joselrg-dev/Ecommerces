@@ -58,6 +58,7 @@
     <Compile Include="Interfaces\IRolRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\CategoriaRepositorio.cs" />
+    <Compile Include="Repositorio\ClienteRepositorio.cs" />
     <Compile Include="Repositorio\EmpleadoRepositorio.cs" />
     <Compile Include="Repositorio\ProductoRepositorio.cs" />
     <Compile Include="Repositorio\ReporteRepositorio.cs" />

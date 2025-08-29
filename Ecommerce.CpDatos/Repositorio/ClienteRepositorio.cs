@@ -11,14 +11,9 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.CpDatos.Repositorio
 {
-    public class EmpleadoRepositorio : IEmpleadoRepositorio
+    public class ClienteRepositorio : IClienteRepositorio
     {
-
-        public EmpleadoRepositorio()
-        {
-        }
-
-        public bool Actualizar(Empleados empleados, out string mensaje)
+        public bool Actualizar(Clientes clientes, out string mensaje)
         {
             bool resultado;
             mensaje = string.Empty;
@@ -26,18 +21,16 @@ namespace Ecommerce.CpDatos.Repositorio
             try
             {
                 using (var conn = DbConnectionHelper.GetConnection())
-                using (var cmd = new SqlCommand("sp_actualizarEmpleado", conn))
+                using (var cmd = new SqlCommand("sp_actualizarCliente", conn))
                 {
-                    cmd.Parameters.AddWithValue("IdEmpleado", empleados.IdEmpleado);
-                    cmd.Parameters.AddWithValue("CodigoEmpleado", empleados.CodigoEmpleado);
-                    cmd.Parameters.AddWithValue("NombreEmpleado", empleados.NombreEmpleado);
-                    cmd.Parameters.AddWithValue("Apellido1Empleado", empleados.Apellido1Empleado);
-                    cmd.Parameters.AddWithValue("Apellido2Empleado", empleados.Apellido2Empleado);
-                    cmd.Parameters.AddWithValue("DireccionEmpleado", empleados.DireccionEmpleado);
-                    cmd.Parameters.AddWithValue("TelefonoEmpleado", empleados.TelefonoEmpleado);
-                    cmd.Parameters.AddWithValue("CorreoEmpleado", empleados.CorreoEmpleado);
-                    cmd.Parameters.AddWithValue("IdRol", empleados.Roles.IdRol);
-                    cmd.Parameters.AddWithValue("Estado", empleados.Estado);
+                    cmd.Parameters.AddWithValue("IdCliente", clientes.IdCliente);
+                    cmd.Parameters.AddWithValue("CodigoCliente", clientes.CodigoCliente);
+                    cmd.Parameters.AddWithValue("NombreCliente", clientes.NombreCliente);
+                    cmd.Parameters.AddWithValue("Apellido1Cliente", clientes.Apellido1Cliente);
+                    cmd.Parameters.AddWithValue("Apellido2Cliente", clientes.Apellido2Cliente);
+                    cmd.Parameters.AddWithValue("TelefonoCliente", clientes.TelefonoCliente);
+                    cmd.Parameters.AddWithValue("CorreoCliente", clientes.CorreoCliente);
+                    cmd.Parameters.AddWithValue("Estado", clientes.Estado);
                     cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -58,7 +51,7 @@ namespace Ecommerce.CpDatos.Repositorio
             return resultado;
         }
 
-        public bool CambiarContraseña(int idUsuario, string nuevaContra, out string mensaje)
+        public bool CambiarContraseña(int idCliente, string nuevaContra, out string mensaje)
         {
             bool resultado;
             mensaje = string.Empty;
@@ -66,9 +59,9 @@ namespace Ecommerce.CpDatos.Repositorio
             try
             {
                 using (var conn = DbConnectionHelper.GetConnection())
-                using (var cmd = new SqlCommand("UPDATE sr.Empleados SET Clave = @nuevaContra, Reestablecer = 0 where IdEmpleado = @Id", conn))
+                using (var cmd = new SqlCommand("UPDATE sr.Clientes SET Clave = @nuevaContra, Reestablecer = 0 where IdCliente = @Id", conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", idUsuario);
+                    cmd.Parameters.AddWithValue("@Id", idCliente);
                     cmd.Parameters.AddWithValue("@nuevaContra", nuevaContra);
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.Text;
@@ -94,9 +87,9 @@ namespace Ecommerce.CpDatos.Repositorio
             try
             {
                 using (var conn = DbConnectionHelper.GetConnection())
-                using (var cmd = new SqlCommand("sp_eliminarEmpleado", conn))
+                using (var cmd = new SqlCommand("sp_eliminarCliente", conn))
                 {
-                    cmd.Parameters.AddWithValue("IdEmpleado", id);
+                    cmd.Parameters.AddWithValue("IdCliente", id);
                     cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -117,25 +110,23 @@ namespace Ecommerce.CpDatos.Repositorio
             return resultado;
         }
 
-        public int Insertar(Empleados empleados, out string mensaje)
+        public int Insertar(Clientes clientes, out string mensaje)
         {
             int idAuto;
             mensaje = string.Empty;
             try
             {
                 using (var conn = DbConnectionHelper.GetConnection())
-                using (var cmd = new SqlCommand("sp_registrarEmpleado", conn))
+                using (var cmd = new SqlCommand("sp_registrarCliente", conn))
                 {
-                    cmd.Parameters.AddWithValue("CodigoEmpleado", empleados.CodigoEmpleado);
-                    cmd.Parameters.AddWithValue("NombreEmpleado", empleados.NombreEmpleado);
-                    cmd.Parameters.AddWithValue("Apellido1Empleado", empleados.Apellido1Empleado);
-                    cmd.Parameters.AddWithValue("Apellido2Empleado", empleados.Apellido2Empleado);
-                    cmd.Parameters.AddWithValue("IdRol", empleados.Roles.IdRol);
-                    cmd.Parameters.AddWithValue("DireccionEmpleado", empleados.DireccionEmpleado);
-                    cmd.Parameters.AddWithValue("TelefonoEmpleado", empleados.TelefonoEmpleado);
-                    cmd.Parameters.AddWithValue("CorreoEmpleado", empleados.CorreoEmpleado);
-                    cmd.Parameters.AddWithValue("ClaveEmpleado", empleados.Clave);
-                    cmd.Parameters.AddWithValue("Estado", empleados.Estado);
+                    cmd.Parameters.AddWithValue("CodigoCliente", clientes.CodigoCliente);
+                    cmd.Parameters.AddWithValue("NombreCliente", clientes.NombreCliente);
+                    cmd.Parameters.AddWithValue("Apellido1Cliente", clientes.Apellido1Cliente);
+                    cmd.Parameters.AddWithValue("Apellido2Cliente", clientes.Apellido2Cliente);
+                    cmd.Parameters.AddWithValue("TelefonoCliente", clientes.TelefonoCliente);
+                    cmd.Parameters.AddWithValue("CorreoCliente", clientes.CorreoCliente);
+                    cmd.Parameters.AddWithValue("ClaveCliente", clientes.Clave);
+                    cmd.Parameters.AddWithValue("Estado", clientes.Estado);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -156,27 +147,25 @@ namespace Ecommerce.CpDatos.Repositorio
             return idAuto;
         }
 
-        public Empleados ObtenerPorId(int id)
+        public Clientes ObtenerPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Empleados> ObtenerTodos()
+        public List<Clientes> ObtenerTodo()
         {
-            var listEmpleado = new List<Empleados>();
+            var listCliente = new List<Clientes>();
 
             try
             {
                 using (SqlConnection conn = DbConnectionHelper.GetConnection())
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("SELECT e.IdEmpleado, e.CodigoEmpleado, e.NombreEmpleado,");
-                    sb.AppendLine("e.Apellido1Empleado, e.Apellido2Empleado,");
-                    sb.AppendLine("e.DireccionEmpleado, e.TelefonoEmpleado,");
-                    sb.AppendLine("e.CorreoEmpleado, e.Clave, e.Estado, e.Reestablecer,");
-                    sb.AppendLine("r.IdRol, r.NombreRol");
-                    sb.AppendLine("FROM sr.Empleados e");
-                    sb.AppendLine("INNER JOIN sr.Roles r ON r.IdRol = e.IdRol");
+                    sb.AppendLine("SELECT cl.IdCliente, cl.CodigoCliente, cl.NombreCliente,");
+                    sb.AppendLine("cl.Apellido1Cliente, cl.Apellido2Cliente,");
+                    sb.AppendLine("cl.TelefonoCliente,");
+                    sb.AppendLine("cl.CorreoCliente, cl.Clave, cl.Estado, cl.Reestablecer,");
+                    sb.AppendLine("FROM sr.Clientes cl");
 
                     SqlCommand cmd = new SqlCommand(sb.ToString(), conn)
                     {
@@ -187,42 +176,35 @@ namespace Ecommerce.CpDatos.Repositorio
                     {
                         while (reader.Read())
                         {
-                            var empleado = new Empleados
+                            var Cliente = new Clientes
                             {
-                                IdEmpleado = Convert.ToInt32(reader["IdEmpleado"]),
-                                CodigoEmpleado = reader["CodigoEmpleado"].ToString(),
-                                NombreEmpleado = reader["NombreEmpleado"].ToString(),
-                                Apellido1Empleado = reader["Apellido1Empleado"].ToString(),
-                                Apellido2Empleado = reader["Apellido2Empleado"].ToString(),
-                                DireccionEmpleado = reader["DireccionEmpleado"].ToString(),
-                                TelefonoEmpleado = reader["TelefonoEmpleado"].ToString(),
-                                CorreoEmpleado = reader["CorreoEmpleado"].ToString(),
-                                Clave = reader["Clave"].ToString(),  
+                                IdCliente = Convert.ToInt32(reader["IdCliente"]),
+                                CodigoCliente = reader["CodigoCliente"].ToString(),
+                                NombreCliente = reader["NombreCliente"].ToString(),
+                                Apellido1Cliente = reader["Apellido1Cliente"].ToString(),
+                                Apellido2Cliente = reader["Apellido2Cliente"].ToString(),
+                                TelefonoCliente = reader["TelefonoCliente"].ToString(),
+                                CorreoCliente = reader["CorreoCliente"].ToString(),
+                                Clave = reader["Clave"].ToString(),
                                 Estado = Convert.ToBoolean(reader["Estado"]),
                                 Reestablecer = reader["Reestablecer"] == DBNull.Value
                                                ? (bool?)null
                                                : Convert.ToBoolean(reader["Reestablecer"]),
-                                Roles = new Roles
-                                {
-                                    IdRol = Convert.ToInt32(reader["IdRol"]),
-                                    NombreRol = reader["NombreRol"].ToString(),
-                                }
                             };
-                            listEmpleado.Add(empleado);
+                            listCliente.Add(Cliente);
                         }
                     }
                 }
             }
             catch
             {
-                listEmpleado = new List<Empleados>();
+                listCliente = new List<Clientes>();
             }
 
-            return listEmpleado;
+            return listCliente;
         }
 
-
-        public bool ReestablecerContraseña(int idUsuario, string nuevaContra, out string mensaje)
+        public bool ReestablecerContraseña(int idCliente, string nuevaContra, out string mensaje)
         {
             bool resultado;
             mensaje = string.Empty;
@@ -230,9 +212,9 @@ namespace Ecommerce.CpDatos.Repositorio
             try
             {
                 using (var conn = DbConnectionHelper.GetConnection())
-                using (var cmd = new SqlCommand("UPDATE sr.Empleados SET Clave = @clave, Reestablecer = 1 where IdEmpleado = @Id", conn))
+                using (var cmd = new SqlCommand("UPDATE sr.Clientes SET Clave = @clave, Reestablecer = 1 where IdCliente = @Id", conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", idUsuario);
+                    cmd.Parameters.AddWithValue("@Id", idCliente);
                     cmd.Parameters.AddWithValue("@clave", nuevaContra);
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.Text;

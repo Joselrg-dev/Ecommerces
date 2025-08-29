@@ -30,11 +30,12 @@ namespace Ecommerce.CpEntities.Models
         [StringLength(100)]
         public string Apellido1Cliente { get; set; }
 
-        [Required]
+ 
         [StringLength(100)]
         public string Apellido2Cliente { get; set; }
 
-        public int? TelefonoCliente { get; set; }
+        [StringLength(25)]
+        public string TelefonoCliente { get; set; }
 
         [StringLength(100)]
         public string CorreoCliente { get; set; }
