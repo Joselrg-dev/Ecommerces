@@ -84,7 +84,7 @@ namespace Ecommerce.WebApplication.Controllers
 
                     FormsAuthentication.SetAuthCookie(objEmpleado.CorreoEmpleado, false);
 
-                    Session["Empleado"] = objEmpleado; // guarda sesión
+                    Session["Empleado"] = objEmpleado;
                     return RedirectToAction("Index", "Dashboard");
                 }
 

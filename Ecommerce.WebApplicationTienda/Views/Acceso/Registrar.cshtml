@@ -1,0 +1,123 @@
+﻿@@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Cliente</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            border-radius: 1rem;
+        }
+
+        .btn-brand {
+            background-color: #2575fc;
+            color: #fff;
+            font-weight: 600;
+        }
+
+            .btn-brand:hover {
+                background-color: #1e63d0;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header text-center bg-white border-0">
+                        <h3 class="fw-bold text-dark my-3">
+                            <i class="fa-solid fa-user-plus me-2"></i> Registro de Cliente
+                        </h3>
+                    </div>
+                    <div class="card-body px-4 py-4">
+                        <form asp-action="Registrar" method="post">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control" id="nombreCliente" name="NombreCliente" type="text" placeholder="Nombre" required />
+                                        <label for="nombreCliente">Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control" id="apellidosCliente" name="ApellidosCliente" type="text" placeholder="Apellidos" required />
+                                        <label for="apellidosCliente">Apellidos</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="correoCliente" name="CorreoCliente" type="email" placeholder="correo@ejemplo.com" required />
+                                <label for="correoCliente">Correo electrónico</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="telefonoCliente" name="TelefonoCliente" type="tel" placeholder="Teléfono" />
+                                <label for="telefonoCliente">Teléfono</label>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control" id="clave" name="Clave" type="password" placeholder="Contraseña" minlength="8" required />
+                                        <label for="clave">Contraseña</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control" id="confirmarClave" name="ConfirmarClave" type="password" placeholder="Confirmar Contraseña" minlength="8" required />
+                                        <label for="confirmarClave">Confirmar Contraseña</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button class="btn btn-brand btn-lg" type="submit">
+                                    <i class="fa-solid fa-user-check me-2"></i> Crear cuenta
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center bg-white border-0">
+                        <p class="text-muted mb-2">
+                            ¿Ya tienes una cuenta?
+                            <a href="@Url.Action("Index", "Acceso")" class="fw-semibold">Inicia sesión</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+@*<div class="bg-blue py-4">
+        <div class="row px-3">
+            <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2019. All rights reserved.</small>
+        </div>
+    </div>*@

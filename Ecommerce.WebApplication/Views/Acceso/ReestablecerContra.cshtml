@@ -44,9 +44,15 @@
                     </a>
 
                     <!-- Mensajes -->
-                    @if (ViewBag.Error != null)
-                    {
-                        <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+                    @{
+                        if (ViewBag.Error != null)
+                        {
+                            <div class="form-floating  mt-3 mb-3">
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewBag.Error
+                                </div>
+                            </div>
+                        }
                     }
 
                     @if (TempData["Success"] != null)

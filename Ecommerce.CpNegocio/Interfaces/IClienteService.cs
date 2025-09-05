@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.CpNegocio.Interfaces
 {
-    interface IClienteService
+    public interface IClienteService
     {
         Clientes ObtenerPorId(int id);
 

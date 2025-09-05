@@ -111,10 +111,8 @@ namespace Ecommerce.CpNegocio.Services
         private bool ValidarCliente(Clientes cliente, out string mensaje)
         {
             mensaje = string.Empty;
-
-            if (string.IsNullOrWhiteSpace(cliente.CodigoCliente))
-                mensaje = "El campo código del Cliente es requerido.";
-            else if (string.IsNullOrWhiteSpace(cliente.NombreCliente))
+            
+            if (string.IsNullOrWhiteSpace(cliente.NombreCliente))
                 mensaje = "El campo nombre es requerido.";
             else if (string.IsNullOrWhiteSpace(cliente.Apellido1Cliente))
                 mensaje = "El campo primer apellido es requerido.";

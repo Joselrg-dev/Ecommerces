@@ -24,7 +24,6 @@ namespace Ecommerce.CpDatos.Repositorio
                 using (var cmd = new SqlCommand("sp_actualizarCliente", conn))
                 {
                     cmd.Parameters.AddWithValue("IdCliente", clientes.IdCliente);
-                    cmd.Parameters.AddWithValue("CodigoCliente", clientes.CodigoCliente);
                     cmd.Parameters.AddWithValue("NombreCliente", clientes.NombreCliente);
                     cmd.Parameters.AddWithValue("Apellido1Cliente", clientes.Apellido1Cliente);
                     cmd.Parameters.AddWithValue("Apellido2Cliente", clientes.Apellido2Cliente);
@@ -119,7 +118,6 @@ namespace Ecommerce.CpDatos.Repositorio
                 using (var conn = DbConnectionHelper.GetConnection())
                 using (var cmd = new SqlCommand("sp_registrarCliente", conn))
                 {
-                    cmd.Parameters.AddWithValue("CodigoCliente", clientes.CodigoCliente);
                     cmd.Parameters.AddWithValue("NombreCliente", clientes.NombreCliente);
                     cmd.Parameters.AddWithValue("Apellido1Cliente", clientes.Apellido1Cliente);
                     cmd.Parameters.AddWithValue("Apellido2Cliente", clientes.Apellido2Cliente);
@@ -161,7 +159,7 @@ namespace Ecommerce.CpDatos.Repositorio
                 using (SqlConnection conn = DbConnectionHelper.GetConnection())
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("SELECT cl.IdCliente, cl.CodigoCliente, cl.NombreCliente,");
+                    sb.AppendLine("SELECT cl.IdCliente, cl.NombreCliente,");
                     sb.AppendLine("cl.Apellido1Cliente, cl.Apellido2Cliente,");
                     sb.AppendLine("cl.TelefonoCliente,");
                     sb.AppendLine("cl.CorreoCliente, cl.Clave, cl.Estado, cl.Reestablecer,");
@@ -179,7 +177,6 @@ namespace Ecommerce.CpDatos.Repositorio
                             var Cliente = new Clientes
                             {
                                 IdCliente = Convert.ToInt32(reader["IdCliente"]),
-                                CodigoCliente = reader["CodigoCliente"].ToString(),
                                 NombreCliente = reader["NombreCliente"].ToString(),
                                 Apellido1Cliente = reader["Apellido1Cliente"].ToString(),
                                 Apellido2Cliente = reader["Apellido2Cliente"].ToString(),
