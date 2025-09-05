@@ -32,10 +32,6 @@ namespace Ecommerce.CpEntities.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Clientes>()
-                .Property(e => e.CodigoCliente)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Clientes>()
                 .Property(e => e.NombreCliente)
                 .IsUnicode(false);
 

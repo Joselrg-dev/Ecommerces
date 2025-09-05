@@ -19,10 +19,6 @@ namespace Ecommerce.CpEntities.Models
         public int IdCliente { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string CodigoCliente { get; set; }
-
-        [Required]
         [StringLength(100)]
         public string NombreCliente { get; set; }
 
@@ -43,11 +39,13 @@ namespace Ecommerce.CpEntities.Models
         [StringLength(100)]
         public string Clave { get; set; }
 
+        public string ConfirmarClave { get; set; }
+
         public bool? Estado { get; set; }
 
         public bool? Reestablecer { get; set; }
 
-        public DateTime? FechaRegistro { get; set; }
+        public DateTime? FechaRegistro { get; set; } = DateTime.Now;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FacturaVentas> FacturaVentas { get; set; }

@@ -123,7 +123,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TiendaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -156,8 +158,10 @@
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
     <Content Include="Content\solid.min.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
+    <Content Include="Content\theme\pngtree-blue-watercolor.jpg" />
     <Content Include="Content\v4-shims.css" />
     <Content Include="Content\v4-shims.min.css" />
     <Content Include="favicon.ico" />
@@ -210,6 +214,7 @@
     <Content Include="Scripts\fontawesome\solid.min.js" />
     <Content Include="Scripts\fontawesome\v4-shims.js" />
     <Content Include="Scripts\fontawesome\v4-shims.min.js" />
+    <Content Include="Scripts\form-utils.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -249,10 +254,13 @@
     <Content Include="webfonts\fa-brands-400.woff" />
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="Views\Acceso\Registrar.cshtml" />
+    <Content Include="Views\Acceso\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Tienda\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -260,6 +268,14 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.CpCommons\Ecommerce.CpCommons.csproj">
+      <Project>{0FD0EE47-DEF5-4FD3-97DA-227FE75CA1E5}</Project>
+      <Name>Ecommerce.CpCommons</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ecommerce.CpDatos\Ecommerce.CpDatos.csproj">
+      <Project>{C4A8944C-051A-490C-A177-20ADB4D020F6}</Project>
+      <Name>Ecommerce.CpDatos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ecommerce.CpEntities\Ecommerce.CpEntities.csproj">
       <Project>{a5f18fd0-5dd2-4b36-9a2a-c5f15c95c1bd}</Project>
       <Name>Ecommerce.CpEntities</Name>

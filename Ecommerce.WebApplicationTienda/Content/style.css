@@ -1,0 +1,109 @@
+﻿/* Clean Banking Login Form - Complete & Self-Contained */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    line-height: 1.6;
+    background-image: linear-gradient( 0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) ), url("/Content/theme/pngtree-blue-watercolor.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+p {
+    font-size: 1.1em;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    font-size: 1.25em;
+}
+
+.row {
+    background-color: #ffffff;
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
+}
+
+.card {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.01);
+}
+
+.btn-brand {
+    font-size: 1.25em;
+    font-weight: bold;
+    padding: 10px 30px;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    background-color: cornflowerblue;
+}
+
+    .btn-brand:hover {
+        background-color: rgb(66, 97, 144);
+        color: #fff;
+    }
+
+.form-label {
+    color: #ffc067;
+}
+
+.form-control:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.2);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #6c757d;
+}
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        height: 1px;
+        background: #e5e7eb;
+        flex: 1;
+    }
+
+/* ilustración */
+.illustration-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.illustration {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 767.98px) {
+    .illustration-wrap {
+        min-height: 240px;
+        margin-bottom: 1rem;
+    }
+}
